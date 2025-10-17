@@ -1,5 +1,13 @@
 # ElmsAdmin
 
+## About This Project
+
+This project is an administrative dashboard built with Angular 20. It serves as a client for the **Employee Leave Management System** public API.
+
+The backend API is provided by [freeapi.miniprojectideas.com](https://freeapi.miniprojectideas.com/index.html). This application specifically interacts with the `EmployeeLeave` endpoints to manage employees, departments, and leave requests.
+
+---
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.6.
 
 ## Development server
