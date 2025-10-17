@@ -1,0 +1,44 @@
+<!-- EMLS Admin - Cadastro de Usuário -->
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold text-primary">Usuários</h4>
+    <button class="btn btn-success fw-bold novo-usuario-btn">
+      <i class="bi bi-person-plus me-2"></i> Novo Usuário
+    </button>
+  </div>
+  <div class="card shadow-sm employee-card">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 employee-table">
+        <thead class="table-primary">
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Perfil</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Exemplo de linha, substitua por *ngFor -->
+          <tr>
+            <td>João Silva</td>
+            <td>joao@exemplo.com</td>
+            <td>Administrador</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-info me-1 ver-btn" title="Ver">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-warning me-1 alterar-btn" title="Alterar">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger excluir-btn" title="Excluir">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <!-- ...ngFor para mais usuários... -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

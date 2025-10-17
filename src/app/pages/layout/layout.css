@@ -1,0 +1,22 @@
+.sidebar {
+  min-height: 100vh;
+  background: #0056b3;
+  color: #fff;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+}
+.sidebar h3 {
+  letter-spacing: 2px;
+}
+.sidebar .nav-link {
+  color: #fff;
+  border-radius: 0.5rem;
+  transition: background 0.2s;
+}
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+  background: #003d80;
+  color: #fff;
+}
+.sidebar .nav-link i {
+  font-size: 1.2rem;
+}

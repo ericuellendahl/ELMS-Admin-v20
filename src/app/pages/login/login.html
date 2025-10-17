@@ -1,0 +1,43 @@
+<!-- EMLS Admin Login Page -->
+<div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+  <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-primary">EMLS Admin</h2>
+      <p class="text-muted">Acesse sua conta</p>
+    </div>
+    <form>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input
+          type="email"
+          class="form-control"
+          name="emailId"
+          [(ngModel)]="employee.emailId"
+          id="email"
+          placeholder="Digite seu e-mail"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Senha</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="employee.password"
+          id="password"
+          placeholder="Digite sua senha"
+          required
+        />
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="remember" />
+          <label class="form-check-label" for="remember">Lembrar-me</label>
+        </div>
+        <a href="#" class="small text-primary">Esqueceu a senha?</a>
+      </div>
+      <button type="button" (click)="onLogin()" class="btn btn-primary w-100 fw-bold">Entrar</button>
+    </form>
+  </div>
+</div>
