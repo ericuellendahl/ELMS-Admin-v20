@@ -27,14 +27,11 @@
             <td>{{ item.emailId }}</td>
             <td>{{ item.role }}</td>
             <td class="text-center">
-              <button class="btn btn-sm btn-info me-1 ver-btn" title="Ver">
-                <i class="bi bi-eye"></i> ver
-              </button>
               <button class="btn btn-sm btn-warning me-1 alterar-btn" title="Alterar">
-                <i class="bi bi-pencil"></i> alterar
+                <i class="bi bi-pencil"></i> Alterar
               </button>
               <button class="btn btn-sm btn-danger excluir-btn" title="Excluir">
-                <i class="bi bi-trash"></i>excluir
+                <i class="bi bi-trash"></i>Excluir
               </button>
             </td>
           </tr>
@@ -45,47 +42,72 @@
   </div>
 </div>
 
-
 <!-- Create Employee Modal -->
-<div class="modal" #createEmployeeModal tabindex="-1" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Create Employee</h5>
-                <button type="button" class="btn-close" (click)="closeModal()"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="employeeName" class="form-label">Employee Name</label>
-                        <input type="text" class="form-control" id="employeeName" [(ngModel)]="newEmployee.employeeName" name="employeeName">
-                    </div>
-                    <div class="mb-3">
-                        <label for="deptId" class="form-label">Department</label>
-                        <select class="form-select" id="deptId" name="deptId" [(ngModel)]="newEmployee.deptId">
-                            @for (dept of departamentsDropdown$ | async; track dept.deptId) {
-                                <option [value]="dept.deptId">{{ dept.deptName }}</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="contactNo" class="form-label">Contact No</label>
-                        <input type="number" class="form-control" id="contactNo" [(ngModel)]="newEmployee.contactNo" name="contactNo">
-                    </div>
-                    <div class="mb-3">
-                        <label for="emailId" class="form-label">Email ID</label>
-                        <input type="email" class="form-control" id="emailId" [(ngModel)]="newEmployee.emailId" name="emailId">
-                    </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" [(ngModel)]="newEmployee.role" name="role">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveEmployee()">Save Employee</button>
-            </div>
-        </div>
+<div class="modal" #createEmployeeModal tabindex="-1" style="display: none">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Employee</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="employeeName" class="form-label">Employee Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="employeeName"
+              [(ngModel)]="newEmployee.employeeName"
+              name="employeeName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="deptId" class="form-label">Department</label>
+            <select class="form-select" id="deptId" name="deptId" [(ngModel)]="newEmployee.deptId">
+              @for (dept of departamentsDropdown$ | async; track dept.deptId) {
+              <option [value]="dept.deptId">{{ dept.deptName }}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="contactNo" class="form-label">Contact No</label>
+            <input
+              type="number"
+              class="form-control"
+              id="contactNo"
+              [(ngModel)]="newEmployee.contactNo"
+              name="contactNo"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="emailId" class="form-label">Email ID</label>
+            <input
+              type="email"
+              class="form-control"
+              id="emailId"
+              [(ngModel)]="newEmployee.emailId"
+              name="emailId"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <input
+              type="text"
+              class="form-control"
+              id="role"
+              [(ngModel)]="newEmployee.role"
+              name="role"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveEmployee()">
+          Save Employee
+        </button>
+      </div>
     </div>
+  </div>
 </div>

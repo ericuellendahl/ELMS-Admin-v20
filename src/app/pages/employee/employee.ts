@@ -1,11 +1,11 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user-service';
-import { EmployeeResponse } from '../../models/EmployeeResponse';
 import { EmployeeEntityModel } from '../../models/Employee.model';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DepartmentDropDown } from '../../models/DepartmentDropDown';
+import { ApiResponse } from '../../models/ApiResponse';
 
 
 
@@ -45,7 +45,7 @@ export class Employee implements OnInit {
 
   getEmployees() {
     this.userservice.getAllEmployee().subscribe({
-      next: (result: EmployeeResponse) => {
+      next: (result: ApiResponse<EmployeeEntityModel[]>) => {
         console.log(result);
         this.userEmployees = result.data;
       },

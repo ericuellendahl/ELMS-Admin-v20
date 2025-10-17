@@ -1,34 +1,56 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { EmployeeResponse } from '../models/EmployeeResponse';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { ApiResponse } from '../models/ApiResponse';
+import { EmployeeEntityModel } from '../models/Employee.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  httpClient = inject(HttpClient);
+   private readonly http = inject(HttpClient);
 
-  onLogin(user: any) {
-    return this.httpClient.post(
-      'https://freeapi.miniprojectideas.com/api/EmployeeLeave/Login',
-      user
-    );
+  private readonly endpoints = {
+    login: '/Login',
+    employees: '/GetEmployees',
+    departments: '/GetDepartments',
+  } as const;
+
+  onLogin(credentials: any): Observable<any> {
+    return this.http
+      .post(this.endpoints.login, credentials)
+      .pipe(catchError(this.handleError));
   }
 
-  getAllEmployee(): Observable<EmployeeResponse> {
-    return this.httpClient.get<EmployeeResponse>(
-      'https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetEmployees'
-    );
+  getAllEmployee(): Observable<ApiResponse<EmployeeEntityModel[]>> {
+    return this.http
+      .get<ApiResponse<EmployeeEntityModel[]>>(this.endpoints.employees)
+      .pipe(catchError(this.handleError));
   }
 
-  getDepartments() {
-    return this.httpClient
-      .get('https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetDepartments')
+  getDepartments(): Observable<EmployeeEntityModel[]> {
+    return this.http
+      .get<ApiResponse<EmployeeEntityModel[]>>(this.endpoints.departments)
       .pipe(
-        map((res: any) => {
-          return res.data;
-        })
+        map((res) => res.data),
+        catchError(this.handleError)
       );
   }
+
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'Ocorreu um erro desconhecido';
+
+    if (error.error instanceof ErrorEvent) {
+      // Erro do lado do cliente
+      errorMessage = `Erro: ${error.error.message}`;
+    } else {
+      // Erro do lado do servidor
+      errorMessage = `Código: ${error.status}\nMensagem: ${error.message}`;
+    }
+
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
+
 }
