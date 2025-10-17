@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user-service';
 import { EmployeeResponse } from '../../models/EmployeeResponse';
-import { EmployeeEntiteModel } from '../../models/Employee.model';
+import { EmployeeEntityModel } from '../../models/Employee.model';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -18,9 +18,9 @@ import { DepartmentDropDown } from '../../models/DepartmentDropDown';
 })
 export class Employee implements OnInit {
   userservice = inject(UserService);
-  userEmployees: EmployeeEntiteModel[] = [];
+  userEmployees: EmployeeEntityModel[] = [];
   isModalOpen: boolean = false;
-  newEmployee: EmployeeEntiteModel = {
+  newEmployee: EmployeeEntityModel = {
     employeeId: 0,
     employeeName: '',
     deptId: 0,

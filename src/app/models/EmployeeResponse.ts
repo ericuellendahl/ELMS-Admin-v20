@@ -1,9 +1,9 @@
-import { EmployeeEntiteModel } from "./Employee.model";
+import { EmployeeEntityModel } from "./Employee.model";
 
 export interface EmployeeResponse {
   message: string;
   result: boolean;
-  data: EmployeeEntiteModel[];
+  data: EmployeeEntityModel[];
 }
 
 
