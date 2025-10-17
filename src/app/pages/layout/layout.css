@@ -12,10 +12,15 @@
   border-radius: 0.5rem;
   transition: background 0.2s;
 }
-.sidebar .nav-link.active,
-.sidebar .nav-link:hover {
+/* Estilo para o link ATIVO (destaque fixo) */
+.sidebar .nav-link.active {
   background: #003d80;
+  font-weight: bold;
   color: #fff;
+}
+/* Estilo para o HOVER em links que NÃO estão ativos */
+.sidebar .nav-link:not(.active):hover {
+  background: #004a9e; /* Um azul um pouco mais claro para diferenciar */
 }
 .sidebar .nav-link i {
   font-size: 1.2rem;
