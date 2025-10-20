@@ -1,27 +1,74 @@
+/* General layout */
+.vh-100 {
+  height: 100vh;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+/* Sidebar */
 .sidebar {
-  min-height: 100vh;
   background: #0056b3;
   color: #fff;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s;
 }
+
 .sidebar h3 {
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
+
 .sidebar .nav-link {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   border-radius: 0.5rem;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
-/* Estilo para o link ATIVO (destaque fixo) */
+
+/* Active link style */
 .sidebar .nav-link.active {
   background: #003d80;
   font-weight: bold;
   color: #fff;
 }
-/* Estilo para o HOVER em links que NÃO estão ativos */
+
+/* Hover style for non-active links */
 .sidebar .nav-link:not(.active):hover {
-  background: #004a9e; /* Um azul um pouco mais claro para diferenciar */
+  background: #004a9e;
+  color: #fff;
 }
+
 .sidebar .nav-link i {
   font-size: 1.2rem;
+}
+
+/* Top Navbar */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Offcanvas Sidebar */
+.offcanvas-start {
+  width: 250px;
+}
+
+.offcanvas-body .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.offcanvas-body .nav-link.active {
+  background: #003d80;
+  font-weight: bold;
+  color: #fff;
+}
+
+.offcanvas-body .nav-link:not(.active):hover {
+  background: #004a9e;
+  color: #fff;
 }

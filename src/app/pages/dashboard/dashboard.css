@@ -1,0 +1,50 @@
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 0.75rem;
+}
+
+.card.border-left-primary {
+  border-left: 0.25rem solid #4e73df !important;
+}
+
+.card.border-left-success {
+  border-left: 0.25rem solid #1cc88a !important;
+}
+
+.card.border-left-info {
+  border-left: 0.25rem solid #36b9cc !important;
+}
+
+.card.border-left-warning {
+  border-left: 0.25rem solid #f6c23e !important;
+}
+
+.card.border-left-danger {
+  border-left: 0.25rem solid #e74a3b !important;
+}
+
+.text-xs {
+  font-size: 0.7rem;
+}
+
+.text-gray-300 {
+  color: #dddfeb !important;
+}
+
+.text-gray-800 {
+  color: #5a5c69 !important;
+}
+
+.shadow {
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+/* Chart Placeholder */
+.chart-area, .chart-pie {
+  border-radius: 0.5rem;
+}

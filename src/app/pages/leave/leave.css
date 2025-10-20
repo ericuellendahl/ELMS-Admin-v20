@@ -1,0 +1,38 @@
+/* Page Title */
+.text-gray-800 {
+  color: #5a5c69 !important;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 0.75rem;
+}
+
+.card-header {
+  background-color: #f8f9fc;
+  border-bottom: 1px solid #e3e6f0;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+/* Table Styles */
+.table-bordered {
+  border: 1px solid #e3e6f0;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fc;
+}
+
+.table .btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+/* Badge Styles */
+.badge {
+  font-size: 0.8rem;
+  padding: 0.4em 0.7em;
+}

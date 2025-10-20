@@ -1,9 +1,89 @@
-<!-- EMLS Admin Sidebar Layout -->
-<div class="d-flex min-vh-100 position-relative">
-  <nav class="sidebar bg-primary text-white p-3" style="width: 250px;">
-    <div class="mb-4 text-center">
-      <h3 class="fw-bold">EMLS Admin</h3>
+<!-- EMLS Admin Modern Layout -->
+<div class="d-flex vh-100 overflow-hidden">
+  <!-- Sidebar -->
+  <nav id="sidebar" class="sidebar bg-primary text-white d-none d-md-block" style="width: 250px">
+    <div class="p-3">
+      <h3 class="fw-bold text-center">EMLS Admin</h3>
+      <hr class="text-white" />
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white" routerLink="/employee" routerLinkActive="active">
+            <i class="bi bi-people me-2"></i> Employee
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white" routerLink="/leave" routerLinkActive="active">
+            <i class="bi bi-calendar-check me-2"></i> Leave
+          </a>
+        </li>
+      </ul>
     </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-grow-1 d-flex flex-column">
+    <!-- Top Navbar -->
+    <header class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <div class="container-fluid">
+        <!-- Sidebar Toggle Button (for mobile) -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasSidebar"
+          aria-controls="offcanvasSidebar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="d-flex align-items-center ms-auto">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="userDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-person-circle me-2"></i> User
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="#" (click)="logOff()">Logoff</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="flex-grow-1 p-4 overflow-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
+<!-- Offcanvas Sidebar (for mobile) -->
+<div
+  class="offcanvas offcanvas-start bg-primary text-white"
+  tabindex="-1"
+  id="offcanvasSidebar"
+  aria-labelledby="offcanvasSidebarLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasSidebarLabel">EMLS Admin</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
     <ul class="nav flex-column">
       <li class="nav-item mb-2">
         <a class="nav-link text-white" routerLink="/dashboard" routerLinkActive="active">
@@ -21,12 +101,5 @@
         </a>
       </li>
     </ul>
-  </nav>
-  <main class="flex-grow-1 p-4 position-relative">
-    <!-- Conteúdo principal aqui -->
-    <router-outlet></router-outlet>
-    <button (click)="logOff()" class="btn btn-danger position-fixed" style="left: 32px; bottom: 32px; z-index: 1000;">
-      Logoff
-    </button>
-  </main>
+  </div>
 </div>

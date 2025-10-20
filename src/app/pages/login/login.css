@@ -1,23 +1,39 @@
-body, html {
-  height: 100%;
+/* Branding Column */
+.bg-primary {
+  background: #0056b3 !important;
 }
 
-.container {
-  min-height: 100vh;
+.display-4 {
+  font-size: 3rem;
+}
+
+.lead {
+  font-size: 1.25rem;
+}
+
+/* Form Column */
+.bg-light {
+  background: #f8f9fa !important;
 }
 
 .card {
+  border: none;
   border-radius: 1rem;
-  background: #fff;
 }
 
-h2 {
-  letter-spacing: 2px;
+.form-control {
+  padding: 0.75rem 1rem;
+}
+
+.input-group-text {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
 }
 
 .btn-primary {
   background-color: #0056b3;
   border: none;
+  transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
@@ -26,4 +42,8 @@ h2 {
 
 .text-primary {
   color: #0056b3 !important;
+}
+
+.text-decoration-none {
+  text-decoration: none !important;
 }
