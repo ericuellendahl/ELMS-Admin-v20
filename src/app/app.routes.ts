@@ -1,3 +1,4 @@
+import { NotFound } from './pages/not-found/not-found';
 import { guardGuard } from './guards/guard-guard';
 import { Routes } from '@angular/router';
 import { Login } from './pages/login/login';
@@ -27,6 +28,10 @@ export const routes: Routes = [
       {
         path: 'leave',
         component: Leave,
+      },
+      {
+        path: '**',
+        component: NotFound,
       },
     ],
   },
