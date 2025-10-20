@@ -19,7 +19,6 @@ export class Login {
     this.employeeService.onLogin(this.employee).subscribe({
       next: (response: any) => {
         if (response.result) {
-          alert('Login successful');
           localStorage.setItem('token', JSON.stringify(response.data));
           this.router.navigateByUrl('/dashboard');
         } else {
