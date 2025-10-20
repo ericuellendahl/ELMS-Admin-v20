@@ -38,7 +38,7 @@
               <td>{{ item.emailId }}</td>
               <td>{{ item.role }}</td>
               <td class="text-center">
-                <button class="btn btn-sm btn-warning me-1" title="Edit">
+                <button class="btn btn-sm btn-warning me-1" title="Edit" (click)="edit(item.employeeId)">
                   <i class="bi bi-pencil-square"></i>Edit
                 </button>
                 <button class="btn btn-sm btn-danger" title="Delete">

@@ -8,18 +8,17 @@ import { EmployeeEntityModel } from '../models/Employee.model';
   providedIn: 'root',
 })
 export class UserService {
-   private readonly http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
 
   private readonly endpoints = {
     login: '/Login',
     employees: '/GetEmployees',
     departments: '/GetDepartments',
+    employeeById: '/GetEmployeeById',
   } as const;
 
   onLogin(credentials: any): Observable<any> {
-    return this.http
-      .post(this.endpoints.login, credentials)
-      .pipe(catchError(this.handleError));
+    return this.http.post(this.endpoints.login, credentials).pipe(catchError(this.handleError));
   }
 
   getAllEmployee(): Observable<ApiResponse<EmployeeEntityModel[]>> {
@@ -29,14 +28,17 @@ export class UserService {
   }
 
   getDepartments(): Observable<EmployeeEntityModel[]> {
-    return this.http
-      .get<ApiResponse<EmployeeEntityModel[]>>(this.endpoints.departments)
-      .pipe(
-        map((res) => res.data),
-        catchError(this.handleError)
-      );
+    return this.http.get<ApiResponse<EmployeeEntityModel[]>>(this.endpoints.departments).pipe(
+      map((res) => res.data),
+      catchError(this.handleError)
+    );
   }
 
+  getEmployeeById(id: number): Observable<ApiResponse<EmployeeEntityModel>> {
+    return this.http
+      .get<ApiResponse<EmployeeEntityModel>>(`${this.endpoints.employeeById}?id=${id}`)
+      .pipe(catchError(this.handleError));
+  }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Ocorreu um erro desconhecido';
@@ -52,5 +54,4 @@ export class UserService {
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
-
 }

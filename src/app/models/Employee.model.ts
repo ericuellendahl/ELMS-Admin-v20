@@ -5,5 +5,7 @@ export interface EmployeeEntityModel {
   deptName: string;
   contactNo: number;
   emailId: string;
+  password : string;
+  gender: string;
   role: string;
 }

@@ -1,0 +1,42 @@
+<div class="container">
+  @if(selectEmployee){
+  <div class="card">
+    <div class="card-header">
+      <h2>Detalhes do Funcionário</h2>
+    </div>
+    <div class="card-body">
+      <div class="detail-item">
+        <strong>ID:</strong>
+        <span>{{ selectEmployee.employeeId }}</span>
+      </div>
+      <div class="detail-item">
+        <strong>Nome:</strong>
+        <span>{{ selectEmployee.employeeName }}</span>
+      </div>
+      <div class="detail-item">
+        <strong>Contato:</strong>
+        <span>{{ selectEmployee.contactNo }}</span>
+      </div>
+      <div class="detail-item">
+        <strong>Email:</strong>
+        <span>{{ selectEmployee.emailId }}</span>
+      </div>
+      <div class="detail-item">
+        <strong>Gênero:</strong>
+        <span>{{ selectEmployee.gender }}</span>
+      </div>
+      <div class="detail-item">
+        <strong>Cargo:</strong>
+        <span>{{ selectEmployee.role }}</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-secondary" (click)="goBack()">Voltar</button>
+    </div>
+  </div>
+  } @if (!selectEmployee) {
+  <div class="loading">
+    <p>Carregando detalhes do funcionário...</p>
+  </div>
+  }
+</div>

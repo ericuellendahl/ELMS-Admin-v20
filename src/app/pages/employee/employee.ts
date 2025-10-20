@@ -6,8 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DepartmentDropDown } from '../../models/DepartmentDropDown';
 import { ApiResponse } from '../../models/ApiResponse';
-
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -27,8 +26,12 @@ export class Employee implements OnInit {
     deptName: '',
     contactNo: 0,
     emailId: '',
-    role: ''
+    role: '',
+    password: '',
+    gender: '',
   };
+
+  router: Router = inject(Router);
 
   @ViewChild('createEmployeeModal') createEmployeeModal!: ElementRef;
 
@@ -78,7 +81,13 @@ export class Employee implements OnInit {
       deptName: '',
       contactNo: 0,
       emailId: '',
-      role: ''
+      role: '',
+      password: '',
+      gender: '',
     };
+  }
+
+  edit(id: number) {
+    this.router.navigate(['/employee/employeedetais', id]);
   }
 }
