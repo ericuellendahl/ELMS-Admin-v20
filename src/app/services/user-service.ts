@@ -15,10 +15,23 @@ export class UserService {
     employees: '/GetEmployees',
     departments: '/GetDepartments',
     employeeById: '/GetEmployeeById',
+    employeeCreate: '/CreateEmployee',
+    employeeDelete: '/DeleteEmployee',
   } as const;
 
   onLogin(credentials: any): Observable<any> {
     return this.http.post(this.endpoints.login, credentials).pipe(catchError(this.handleError));
+  }
+
+  postEmployee(employee: EmployeeEntityModel): Observable<ApiResponse<any>> {
+    return this.http
+      .post<ApiResponse<any>>(this.endpoints.employeeCreate, employee)
+      .pipe(catchError(this.handleError));
+  }
+  deleteEmployee(employeeId?: number): Observable<ApiResponse<any>> {
+    return this.http
+      .delete<ApiResponse<any>>(`${this.endpoints.employeeDelete}?id=${employeeId}`)
+      .pipe(catchError(this.handleError));
   }
 
   getAllEmployee(): Observable<ApiResponse<EmployeeEntityModel[]>> {

@@ -1,9 +1,9 @@
 export interface EmployeeEntityModel {
-  employeeId: number;
+  employeeId?: number;
   employeeName: string;
   deptId: number;
   deptName: string;
-  contactNo: number;
+  contactNo: string;
   emailId: string;
   password : string;
   gender: string;

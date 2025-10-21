@@ -1,9 +1,9 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user-service';
 import { EmployeeEntityModel } from '../../models/Employee.model';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Unsubscribable } from 'rxjs';
 import { DepartmentDropDown } from '../../models/DepartmentDropDown';
 import { ApiResponse } from '../../models/ApiResponse';
 import { Router } from '@angular/router';
@@ -15,16 +15,15 @@ import { Router } from '@angular/router';
   styleUrl: './employee.css',
   standalone: true,
 })
-export class Employee implements OnInit {
+export class Employee implements OnInit, OnDestroy {
   userservice = inject(UserService);
   userEmployees: EmployeeEntityModel[] = [];
   isModalOpen: boolean = false;
   newEmployee: EmployeeEntityModel = {
-    employeeId: 0,
     employeeName: '',
     deptId: 0,
     deptName: '',
-    contactNo: 0,
+    contactNo: '',
     emailId: '',
     role: '',
     password: '',
@@ -32,6 +31,8 @@ export class Employee implements OnInit {
   };
 
   router: Router = inject(Router);
+
+  unsubscribe: any;
 
   @ViewChild('createEmployeeModal') createEmployeeModal!: ElementRef;
 
@@ -47,7 +48,7 @@ export class Employee implements OnInit {
   }
 
   getEmployees() {
-    this.userservice.getAllEmployee().subscribe({
+    this.unsubscribe = this.userservice.getAllEmployee().subscribe({
       next: (result: ApiResponse<EmployeeEntityModel[]>) => {
         console.log(result);
         this.userEmployees = result.data;
@@ -69,8 +70,30 @@ export class Employee implements OnInit {
 
   saveEmployee() {
     console.log('Saving employee:', this.newEmployee);
-    this.userEmployees.push(this.newEmployee);
-    this.closeModal();
+
+    this.userservice.postEmployee(this.newEmployee).subscribe({
+      next: (result) => {
+        console.log(result);
+        this.userEmployees.unshift(this.newEmployee);
+        alert('Employee created successfully!');
+        this.closeModal();
+      },
+      error: (error) => {
+        console.error('Error saving employee:', error);
+      },
+    });
+  }
+  remove(employeeId?: number){
+    this.userservice.deleteEmployee(employeeId).subscribe({
+      next: (result) => {
+        console.log(result);
+        this.userEmployees = this.userEmployees.filter((employee) => employee.employeeId !== employeeId);
+        alert(result.message);
+      },
+      error: (error) => {
+        console.error('Error deleting employee:', error);
+      },
+    });
   }
 
   resetNewEmployee() {
@@ -79,7 +102,7 @@ export class Employee implements OnInit {
       employeeName: '',
       deptId: 0,
       deptName: '',
-      contactNo: 0,
+      contactNo: '',
       emailId: '',
       role: '',
       password: '',
@@ -87,7 +110,11 @@ export class Employee implements OnInit {
     };
   }
 
-  edit(id: number) {
+  edit(id?: number) {
     this.router.navigate(['/employee/employeedetais', id]);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe?.unsubscribe();
   }
 }

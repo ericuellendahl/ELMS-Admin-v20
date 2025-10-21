@@ -24,6 +24,7 @@
           <thead class="table-light">
             <tr>
               <th>ID</th>
+              <th>Employee Id</th>
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
@@ -34,6 +35,7 @@
             @for (item of userEmployees; track $index) {
             <tr>
               <td>{{ $index + 1 }}</td>
+              <td>{{ item.employeeId }}</td>
               <td>{{ item.employeeName }}</td>
               <td>{{ item.emailId }}</td>
               <td>{{ item.role }}</td>
@@ -41,7 +43,7 @@
                 <button class="btn btn-sm btn-warning me-1" title="Edit" (click)="edit(item.employeeId)">
                   <i class="bi bi-pencil-square"></i>Edit
                 </button>
-                <button class="btn btn-sm btn-danger" title="Delete">
+                <button class="btn btn-sm btn-danger" title="Delete" (click)="remove(item.employeeId)">
                   <i class="bi bi-trash"></i>Delete
                 </button>
               </td>
@@ -88,11 +90,19 @@
           </div>
           <div class="mb-3">
             <label for="contactNo" class="form-label">Contact No</label>
-            <input type="number" class="form-control" id="contactNo" [(ngModel)]="newEmployee.contactNo" name="contactNo">
+            <input type="text" class="form-control" id="contactNo" [(ngModel)]="newEmployee.contactNo" name="contactNo">
           </div>
           <div class="mb-3">
             <label for="emailId" class="form-label">Email ID</label>
             <input type="email" class="form-control" id="emailId" [(ngModel)]="newEmployee.emailId" name="emailId">
+          </div>
+            <div class="mb-3">
+            <label for="role" class="form-label">Password</label>
+            <input type="text" class="form-control" id="password" [(ngModel)]="newEmployee.password" name="password">
+          </div>
+            <div class="mb-3">
+            <label for="role" class="form-label">Gender</label>
+            <input type="text" class="form-control" id="gender" [(ngModel)]="newEmployee.gender" name="gender">
           </div>
           <div class="mb-3">
             <label for="role" class="form-label">Role</label>
