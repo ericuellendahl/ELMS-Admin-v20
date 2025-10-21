@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../../services/user-service';
+import { UserService } from '../../services/user/user-service';
 import { EmployeeEntityModel } from '../../models/Employee.model';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';

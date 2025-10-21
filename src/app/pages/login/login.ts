@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/User.model';
-import { UserService } from '../../services/user-service';
 import { Router } from '@angular/router';
+import { LoginService } from '../../services/login/login-service';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
 })
 export class Login {
   employee: User = new User();
-  employeeService = inject(UserService);
+  loginService = inject(LoginService);
   router = inject(Router);
 
   onLogin() {
-    this.employeeService.onLogin(this.employee).subscribe({
+    this.loginService.onLogin(this.employee).subscribe({
       next: (response: any) => {
         if (response.result) {
           localStorage.setItem('token', JSON.stringify(response.data));

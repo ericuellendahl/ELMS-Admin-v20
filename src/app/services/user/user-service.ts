@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { ApiResponse } from '../models/ApiResponse';
-import { EmployeeEntityModel } from '../models/Employee.model';
+import { ApiResponse } from '../../models/ApiResponse';
+import { EmployeeEntityModel } from '../../models/Employee.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +11,12 @@ export class UserService {
   private readonly http = inject(HttpClient);
 
   private readonly endpoints = {
-    login: '/Login',
     employees: '/GetEmployees',
     departments: '/GetDepartments',
     employeeById: '/GetEmployeeById',
     employeeCreate: '/CreateEmployee',
     employeeDelete: '/DeleteEmployee',
   } as const;
-
-  onLogin(credentials: any): Observable<any> {
-    return this.http.post(this.endpoints.login, credentials).pipe(catchError(this.handleError));
-  }
 
   postEmployee(employee: EmployeeEntityModel): Observable<ApiResponse<any>> {
     return this.http
