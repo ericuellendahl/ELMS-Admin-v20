@@ -19,6 +19,8 @@ export class Employee implements OnInit, OnDestroy {
   userservice = inject(UserService);
   userEmployees: EmployeeEntityModel[] = [];
   isModalOpen: boolean = false;
+
+  searchTerm: string = '';
   newEmployee: EmployeeEntityModel = {
     employeeName: '',
     deptId: 0,
@@ -50,7 +52,6 @@ export class Employee implements OnInit, OnDestroy {
   getEmployees() {
     this.unsubscribe = this.userservice.getAllEmployee().subscribe({
       next: (result: ApiResponse<EmployeeEntityModel[]>) => {
-        console.log(result);
         this.userEmployees = result.data;
       },
       error: (error) => {
@@ -69,11 +70,8 @@ export class Employee implements OnInit, OnDestroy {
   }
 
   saveEmployee() {
-    console.log('Saving employee:', this.newEmployee);
-
     this.userservice.postEmployee(this.newEmployee).subscribe({
       next: (result) => {
-        console.log(result);
         this.userEmployees.unshift(this.newEmployee);
         alert('Employee created successfully!');
         this.closeModal();
@@ -86,7 +84,6 @@ export class Employee implements OnInit, OnDestroy {
   remove(employeeId?: number){
     this.userservice.deleteEmployee(employeeId).subscribe({
       next: (result) => {
-        console.log(result);
         this.userEmployees = this.userEmployees.filter((employee) => employee.employeeId !== employeeId);
         alert(result.message);
       },
@@ -94,6 +91,19 @@ export class Employee implements OnInit, OnDestroy {
         console.error('Error deleting employee:', error);
       },
     });
+  }
+
+  search() {
+    if (!this.searchTerm) {
+      this.getEmployees();
+      return;
+    }
+
+    this.userEmployees = this.userEmployees.filter(employee =>
+      employee.employeeName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      employee.emailId.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      employee.role.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
   resetNewEmployee() {
