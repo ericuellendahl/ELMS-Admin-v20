@@ -1,50 +1,142 @@
+/* Dashboard Styles */
+:root {
+  --primary-color: #4361ee;
+  --primary-hover: #3a56d4;
+  --success-color: #28a745;
+  --info-color: #17a2b8;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --border-radius: 0.5rem;
+  --transition: all 0.3s ease;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+  background: linear-gradient(135deg, var(--primary-color), #3a56d4);
+  border: none;
+  transition: var(--transition);
+}
+
+.welcome-banner:hover {
+  box-shadow: 0 0.5rem 1.5rem rgba(67, 97, 238, 0.2);
+}
+
 /* Card Styles */
 .card {
   border: none;
-  border-radius: 0.75rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  overflow: hidden;
+  background-color: #fff;
 }
 
-.card.border-left-primary {
-  border-left: 0.25rem solid #4e73df !important;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08) !important;
 }
 
-.card.border-left-success {
-  border-left: 0.25rem solid #1cc88a !important;
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1.25rem 1.5rem;
 }
 
-.card.border-left-info {
-  border-left: 0.25rem solid #36b9cc !important;
+.card-title {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
 }
 
-.card.border-left-warning {
-  border-left: 0.25rem solid #f6c23e !important;
+/* Status Badges */
+.badge {
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+  border-radius: 50rem;
 }
 
-.card.border-left-danger {
-  border-left: 0.25rem solid #e74a3b !important;
+/* Table Styles */
+.table {
+  margin-bottom: 0;
 }
 
-.text-xs {
-  font-size: 0.7rem;
+.table thead th {
+  border-top: none;
+  border-bottom: 1px solid #e9ecef;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
 }
 
-.text-gray-300 {
-  color: #dddfeb !important;
+.table tbody td {
+  padding: 1rem 1.5rem;
+  vertical-align: middle;
+  border-color: #f1f3f9;
 }
 
-.text-gray-800 {
-  color: #5a5c69 !important;
+.table-hover tbody tr:hover {
+  background-color: rgba(67, 97, 238, 0.03);
 }
 
-.shadow {
-  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
-}
-
-.font-weight-bold {
-  font-weight: 700 !important;
-}
-
-/* Chart Placeholder */
+/* Chart Containers */
 .chart-area, .chart-pie {
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius);
+  background-color: #f8fafc;
+  transition: var(--transition);
+}
+
+/* Hover Effects */
+.hover-scale {
+  transition: var(--transition);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  .table-responsive {
+    border-radius: var(--border-radius);
+    border: 1px solid #e9ecef;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
