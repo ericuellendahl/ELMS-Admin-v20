@@ -1,7 +1,15 @@
-import { Component, inject, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, inject, HostListener, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+  Router, 
+  RouterLink, 
+  RouterLinkActive, 
+  RouterOutlet, 
+  ActivatedRoute, 
+  NavigationEnd 
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EmployeeEntityModel } from '../../models/Employee.model';
+import { filter, map } from 'rxjs/operators';
 
 declare var bootstrap: any;
 
@@ -12,13 +20,39 @@ declare var bootstrap: any;
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })
-export class Layout {
+export class Layout implements OnInit {
+  pageTitle: string = 'Dashboard';
+  pageIcon: string = 'bi-speedometer2';
+  user!: EmployeeEntityModel;
+  
   router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+  
   private offcanvas: any;
   private sidebarVisible = false;
-  user!: EmployeeEntityModel;
 
   @ViewChild('offcanvasSidebar') offcanvasElement!: ElementRef;
+
+  ngOnInit(): void {
+    const userLocal = localStorage.getItem('token');
+    if (userLocal) this.user = JSON.parse(userLocal);
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => {
+        let route = this.activatedRoute;
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+        return route;
+      }),
+      filter(route => route.outlet === 'primary'),
+      map(route => route.snapshot.data)
+    ).subscribe(data => {
+      this.pageTitle = data['title'];
+      this.pageIcon = data['icon'];
+    });
+  }
 
   ngAfterViewInit() {
     // Inicializa o offcanvas do Bootstrap
