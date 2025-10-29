@@ -1,0 +1,15 @@
+<div class="product-grid">
+  @for (product of produtList; track product.id) {
+    <div class="product-card">
+      <img [src]="product.imageUrl" [alt]="product.name">
+      <div class="product-card-body">
+        <p>{{ product.description }}</p>
+        <h4 class="product-price">{{ product.price | currency:'BRL' }}</h4>
+        <div class="product-card-buttons">
+          <button class="btn btn-buy" routerLink="/checkout" [state]="product">Comprar</button>
+          <button class="btn btn-details">Detalhes</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

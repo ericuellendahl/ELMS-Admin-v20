@@ -7,6 +7,8 @@ import { Employee } from './pages/employee/employee';
 import { Leave } from './pages/leave/leave';
 import { Layout } from './pages/layout/layout';
 import { EmployeeDetais } from './pages/employee-detais/employee-detais';
+import { Product } from './pages/product/product';
+import { CheckOut } from './pages/check-out/check-out';
 
 export const routes: Routes = [
   {
@@ -41,9 +43,18 @@ export const routes: Routes = [
         data: { title: 'Leave Management', icon: 'bi-calendar-check' },
       },
       {
+        path: 'product',
+        component: Product,
+        data: { title: 'Product', icon: 'bi-calendar-check' },
+      },
+      {
+        path: 'checkout',
+        component: CheckOut,
+        data: { title: 'Check Out', icon: 'bi-calendar-check' },
+      },
+      {
         path: '**',
         component: NotFound,
-        data: { title: 'Not Found', icon: 'bi-exclamation-triangle' },
       },
     ],
   },

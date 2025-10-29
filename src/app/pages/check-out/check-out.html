@@ -1,0 +1,36 @@
+<div class="checkout-container">
+  <div class="payment-form">
+    <h2>Payment Details</h2>
+    <form>
+      <div class="form-group">
+        <label for="card-number">Card Number</label>
+        <input type="text" id="card-number" placeholder="**** **** **** ****" />
+      </div>
+      <div class="form-group">
+        <label for="expiry-date">Expiry Date</label>
+        <input type="text" id="expiry-date" placeholder="MM/YY" />
+      </div>
+      <div class="form-group">
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" placeholder="***" />
+      </div>
+      <button type="submit" class="pay-button">Pagar</button>
+    </form>
+  </div>
+  <div class="order-summary">
+    <h3>Summary</h3>
+    <h2>{{ this.productModel.name }}</h2>
+    <div class="summary-item">
+      <span>Desconto</span>
+      <span>-R$ {{ addOff(this.productModel.price) }}</span>
+    </div>
+    <div class="summary-item">
+      <span>Total</span>
+      <span>R$ {{ this.productModel.price }}</span>
+    </div>
+    <div class="summary-item total-payable">
+      <span>Valor a Pagar</span>
+      <span>R$ {{ this.productModel.price - addOff(this.productModel.price) }}</span>
+    </div>
+  </div>
+</div>
