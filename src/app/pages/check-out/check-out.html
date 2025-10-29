@@ -19,18 +19,18 @@
   </div>
   <div class="order-summary">
     <h3>Summary</h3>
-    <h2>{{ this.productModel.name }}</h2>
+    <h2>{{ productModel.name }}</h2>
     <div class="summary-item">
       <span>Desconto</span>
-      <span>-R$ {{ addOff(this.productModel.price) }}</span>
+      <span>-{{addOff(productModel.price) | currency:'BRL' }}</span>
     </div>
     <div class="summary-item">
       <span>Total</span>
-      <span>R$ {{ this.productModel.price }}</span>
+      <span>{{ this.productModel.price | currency:'BRL' }}</span>
     </div>
     <div class="summary-item total-payable">
       <span>Valor a Pagar</span>
-      <span>R$ {{ this.productModel.price - addOff(this.productModel.price) }}</span>
+      <span>{{ (productModel.price - addOff(productModel.price)) | currency:'BRL' }}</span>
     </div>
   </div>
 </div>
