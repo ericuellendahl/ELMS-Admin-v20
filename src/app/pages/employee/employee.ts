@@ -7,6 +7,7 @@ import { Observable, Unsubscribable } from 'rxjs';
 import { DepartmentDropDown } from '../../models/DepartmentDropDown';
 import { ApiResponse } from '../../models/ApiResponse';
 import { Router } from '@angular/router';
+import { Loading } from '../../services/loaders/loading';
 
 @Component({
   selector: 'app-employee',
@@ -17,6 +18,9 @@ import { Router } from '@angular/router';
 })
 export class Employee implements OnInit, OnDestroy {
   userservice = inject(UserService);
+
+  private loading = inject(Loading);
+
   userEmployees: EmployeeEntityModel[] = [];
   isModalOpen: boolean = false;
 
@@ -50,12 +54,15 @@ export class Employee implements OnInit, OnDestroy {
   }
 
   getEmployees() {
+    this.loading.setUpdating(true);
     this.unsubscribe = this.userservice.getAllEmployee().subscribe({
       next: (result: ApiResponse<EmployeeEntityModel[]>) => {
         this.userEmployees = result.data;
+        this.loading.setUpdating(false);
       },
       error: (error) => {
         console.error('Error fetching employees:', error);
+        this.loading.setUpdating(false);
       },
     });
   }

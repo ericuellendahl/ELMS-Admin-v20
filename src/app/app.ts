@@ -1,3 +1,4 @@
+import { Loading } from './services/loaders/loading';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   Router,
@@ -8,7 +9,7 @@ import {
   NavigationError,
   NavigationCancel,
 } from '@angular/router';
-import { timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,28 +18,33 @@ import { timer } from 'rxjs';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
+  private loading = inject(Loading);
+
   protected readonly title = signal('elmsAdmin');
   router: Router = inject(Router);
 
   isLoading: boolean = false;
 
   ngOnInit(): void {
-    this.router.events.subscribe((routerEvent: Event) => {
-      if (routerEvent instanceof NavigationStart) {
-        this.isLoading = true;
-      }
+     this.loading.isloading$().subscribe((isloading: boolean) => {
+      this.isLoading = isloading;
+     });
 
-      if (
-        routerEvent instanceof NavigationEnd ||
-        routerEvent instanceof NavigationError ||
-        routerEvent instanceof NavigationCancel
-      ) {
-        // timer(1000).subscribe(() => {
-        //   this.isLoading = false;
-        // });
-
-        this.isLoading = false;
-      }
-    });
+    //   this.router.events.subscribe((routerEvent: Event) => {
+    //     if (routerEvent instanceof NavigationStart) {
+    //       this.Loading.setUpdating(true);
+    //     }
+    //     if (
+    //       routerEvent instanceof NavigationEnd ||
+    //       routerEvent instanceof NavigationError ||
+    //       routerEvent instanceof NavigationCancel
+    //     ) {
+    //       // timer(1000).subscribe(() => {
+    //       //   this.isLoading = false;
+    //       // });
+    //       this.Loading.setUpdating(false);
+    //     }
+    //   });
+    // }
   }
 }
