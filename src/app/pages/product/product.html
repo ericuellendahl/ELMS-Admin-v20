@@ -1,15 +1,23 @@
-<div class="product-grid">
-  @for (product of produtList; track product.id) {
-    <div class="product-card">
-      <img [src]="product.imageUrl" [alt]="product.name">
-      <div class="product-card-body">
-        <p>{{ product.description }}</p>
-        <h4 class="product-price">{{ product.price | currency:'BRL' }}</h4>
-        <div class="product-card-buttons">
-          <button class="btn btn-buy" routerLink="/checkout" [state]="product">Comprar</button>
-          <button class="btn btn-details">Detalhes</button>
-        </div>
-      </div>
-    </div>
-  }
+<div class="product-container">
+  <div class="product-grid">
+    @for (product of produtList; track product.id) {
+      <mat-card class="product-card">
+        <img mat-card-image [src]="product.imageUrl" [alt]="product.name">
+        <mat-card-content>
+          <p class="product-description">{{ product.description }}</p>
+          <h4 class="product-price">{{ product.price | currency:'BRL' }}</h4>
+        </mat-card-content>
+        <mat-card-actions class="product-actions">
+          <button mat-raised-button color="primary" routerLink="/checkout" [state]="product">
+            <mat-icon>shopping_cart</mat-icon>
+            Comprar
+          </button>
+          <button mat-button color="accent">
+            <mat-icon>info</mat-icon>
+            Detalhes
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
 </div>

@@ -1,122 +1,132 @@
-<div class="container-fluid">
-  <!-- Page Title -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Employees</h1>
-    <button class="btn btn-primary shadow-sm" (click)="openNewUser()">
-      <i class="bi bi-plus-circle me-2"></i>New Employee
+<div class="employee-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>Employees</h1>
+    <button mat-raised-button color="primary" (click)="openNewUser()">
+      <mat-icon>add</mat-icon>
+      New Employee
     </button>
   </div>
 
   <!-- Employees Table Card -->
-  <div class="card shadow mb-4">
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">All Employees</h6>
-      <div class="col-md-4">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for..." [(ngModel)]="searchTerm" (keyup.enter)="search()">
-          <button class="btn btn-primary" type="button" (click)="search()"><i class="bi bi-search">Search</i></button>
+  <mat-card>
+    <mat-card-header>
+      <div class="card-header-row">
+        <mat-card-title>All Employees</mat-card-title>
+        <div class="search-section">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput type="text" [(ngModel)]="searchTerm" (keyup.enter)="search()" placeholder="Search for...">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <button mat-icon-button color="primary" (click)="search()" title="Search">
+            <mat-icon>search</mat-icon>
+          </button>
         </div>
       </div>
-    </div>
-    <div class="card-body p-0">
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover" width="100%" cellspacing="0">
-          <thead class="table-light">
-            <tr>
-              <th>ID</th>
-              <th>Employee Id</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th class="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (item of userEmployees; track $index) {
-            <tr>
-              <td>{{ $index + 1 }}</td>
-              <td>{{ item.employeeId }}</td>
-              <td>{{ item.employeeName }}</td>
-              <td>{{ item.emailId }}</td>
-              <td>{{ item.role }}</td>
-              <td class="text-center">
-                <button class="btn btn-sm btn-warning me-1" title="Edit" (click)="edit(item.employeeId)">
-                  <i class="bi bi-pencil-square"></i>Edit
-                </button>
-                <button class="btn btn-sm btn-danger" title="Delete" (click)="remove(item.employeeId)">
-                  <i class="bi bi-trash"></i>Delete
-                </button>
-              </td>
-            </tr>
-            }
-          </tbody>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="employee-table">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="employeeId">
+            <th mat-header-cell *matHeaderCellDef>Employee Id</th>
+            <td mat-cell *matCellDef="let element">{{ element.employeeId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.employeeName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.emailId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <button mat-icon-button color="accent" (click)="edit(element.employeeId)" title="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="remove(element.employeeId)" title="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </div>
-    </div>
-    <!-- Pagination -->
-    <div class="card-footer">
-      <nav class="d-flex justify-content-end">
-        <ul class="pagination">
-          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
-    </div>
-    
-  </div>
+
+      <!-- Pagination -->
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of employees">
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
 </div>
 
-<!-- Create Employee Modal -->
-<div class="modal" #createEmployeeModal tabindex="-1" style="display: none">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createEmployeeModalLabel">Create New Employee</h5>
-        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="employeeName" class="form-label">Employee Name</label>
-            <input type="text" class="form-control" id="employeeName" [(ngModel)]="newEmployee.employeeName" name="employeeName">
-          </div>
-          <div class="mb-3">
-            <label for="deptId" class="form-label">Department</label>
-            <select class="form-select" id="deptId" name="deptId" [(ngModel)]="newEmployee.deptId">
-              @for (dept of departamentsDropdown$ | async; track dept.deptId) {
-              <option [value]="dept.deptId">{{ dept.deptName }}</option>
-              }
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="contactNo" class="form-label">Contact No</label>
-            <input type="text" class="form-control" id="contactNo" [(ngModel)]="newEmployee.contactNo" name="contactNo">
-          </div>
-          <div class="mb-3">
-            <label for="emailId" class="form-label">Email ID</label>
-            <input type="email" class="form-control" id="emailId" [(ngModel)]="newEmployee.emailId" name="emailId">
-          </div>
-            <div class="mb-3">
-            <label for="role" class="form-label">Password</label>
-            <input type="text" class="form-control" id="password" [(ngModel)]="newEmployee.password" name="password">
-          </div>
-            <div class="mb-3">
-            <label for="role" class="form-label">Gender</label>
-            <input type="text" class="form-control" id="gender" [(ngModel)]="newEmployee.gender" name="gender">
-          </div>
-          <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <input type="text" class="form-control" id="role" [(ngModel)]="newEmployee.role" name="role">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveEmployee()">Save Employee</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Create Employee Dialog -->
+<dialog #createEmployeeDialog class="employee-dialog">
+  <mat-dialog-content>
+    <h2 mat-dialog-title>Create New Employee</h2>
+    <form>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Employee Name</mat-label>
+        <input matInput type="text" [(ngModel)]="newEmployee.employeeName" name="employeeName" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Department</mat-label>
+        <mat-select [(ngModel)]="newEmployee.deptId" name="deptId" required>
+          @for (dept of departamentsDropdown$ | async; track dept.deptId) {
+            <mat-option [value]="dept.deptId">{{ dept.deptName }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contact No</mat-label>
+        <input matInput type="text" [(ngModel)]="newEmployee.contactNo" name="contactNo" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email ID</mat-label>
+        <input matInput type="email" [(ngModel)]="newEmployee.emailId" name="emailId" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="text" [(ngModel)]="newEmployee.password" name="password" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Gender</mat-label>
+        <input matInput type="text" [(ngModel)]="newEmployee.gender" name="gender" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Role</mat-label>
+        <input matInput type="text" [(ngModel)]="newEmployee.role" name="role" required>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="closeModal()">Close</button>
+    <button mat-raised-button color="primary" (click)="saveEmployee()">Save Employee</button>
+  </mat-dialog-actions>
+</dialog>

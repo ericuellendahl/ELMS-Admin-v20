@@ -1,5 +1,13 @@
-<div class="container">
-  <h1>404 - Página Não Encontrada</h1>
-  <p>A página que você está procurando não existe.</p>
-  <a routerLink="/dashboard" class="btn">Voltar para o Início</a>
+<div class="not-found-container">
+  <mat-card class="not-found-card">
+    <mat-card-content class="not-found-content">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h1>404 - Página Não Encontrada</h1>
+      <p>A página que você está procurando não existe.</p>
+      <button mat-raised-button color="primary" routerLink="/dashboard">
+        <mat-icon>home</mat-icon>
+        Voltar para o Início
+      </button>
+    </mat-card-content>
+  </mat-card>
 </div>

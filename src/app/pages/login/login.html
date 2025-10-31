@@ -1,59 +1,65 @@
-<div class="container-fluid vh-100">
-  <div class="row h-100">
+<div class="login-container">
+  <div class="login-row">
     <!-- Branding Column -->
-    <div class="col-md-6 d-none d-md-flex bg-primary text-white p-5 flex-column justify-content-center align-items-center">
-      <h1 class="display-4 fw-bold mb-4">EMLS Admin</h1>
-      <p class="lead">Gerenciamento Simplificado de Funcionários e Licenças</p>
+    <div class="branding-section">
+      <h1 class="brand-title">EMLS Admin</h1>
+      <p class="brand-subtitle">Gerenciamento Simplificado de Funcionários e Licenças</p>
     </div>
 
     <!-- Form Column -->
-    <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
-      <div class="card shadow-lg p-4 p-md-5" style="width: 100%; max-width: 450px;">
-        <div class="text-center mb-4">
-          <h2 class="fw-bold text-primary">Acesse sua Conta</h2>
-          <p class="text-muted">Bem-vindo de volta!</p>
-        </div>
-        <form>
-          <div class="mb-3 position-relative">
-            <label for="email" class="form-label">E-mail</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+    <div class="form-section">
+      <mat-card class="login-card">
+        <mat-card-header>
+          <div class="login-header">
+            <h2>Acesse sua Conta</h2>
+            <p>Bem-vindo de volta!</p>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <form>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>E-mail</mat-label>
+              <mat-icon matPrefix>email</mat-icon>
               <input
+                matInput
                 type="email"
-                class="form-control"
                 name="emailId"
                 [(ngModel)]="employee.emailId"
-                id="email"
                 placeholder="seu@email.com"
                 required
               />
-            </div>
-          </div>
-          <div class="mb-3 position-relative">
-            <label for="password" class="form-label">Senha</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Senha</mat-label>
+              <mat-icon matPrefix>lock</mat-icon>
               <input
+                matInput
                 type="password"
-                class="form-control"
                 name="password"
                 [(ngModel)]="employee.password"
-                id="password"
                 placeholder="Sua senha"
                 required
               />
+            </mat-form-field>
+
+            <div class="login-options">
+              <mat-checkbox>Lembrar-me</mat-checkbox>
+              <a href="#" class="forgot-password">Esqueceu a senha?</a>
             </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="remember" />
-              <label class="form-check-label" for="remember">Lembrar-me</label>
-            </div>
-            <a href="#" class="small text-primary text-decoration-none">Esqueceu a senha?</a>
-          </div>
-          <button type="button" (click)="onLogin()" class="btn btn-primary w-100 fw-bold py-2">Entrar</button>
-        </form>
-      </div>
+
+            <button
+              mat-raised-button
+              color="primary"
+              class="login-button"
+              (click)="onLogin()"
+              type="button"
+            >
+              Entrar
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

@@ -4,10 +4,24 @@ import { User } from '../../models/User.model';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login/login-service';
 import { Loading } from '../../services/loaders/loading';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCheckboxModule
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

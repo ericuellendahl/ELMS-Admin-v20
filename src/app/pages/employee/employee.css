@@ -1,41 +1,100 @@
-/* Page Title */
-.text-gray-800 {
-  color: #5a5c69 !important;
+/* Material Design Employee Styles */
+.employee-container {
+  padding: 0;
 }
 
-/* Card Styles */
-.card {
-  border: none;
-  border-radius: 0.75rem;
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.card-header {
-  background-color: #f8f9fc;
-  border-bottom: 1px solid #e3e6f0;
+.page-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2d3748;
 }
 
-.font-weight-bold {
-  font-weight: 700 !important;
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-/* Table Styles */
-.table-bordered {
-  border: 1px solid #e3e6f0;
+.search-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.table-hover tbody tr:hover {
-  background-color: #f8f9fc;
+.search-section mat-form-field {
+  width: 250px;
 }
 
-.table .btn-sm {
-  padding: 0.25rem 0.5rem;
+.table-container {
+  overflow-x: auto;
 }
 
-/* Modal Styles */
-.modal-header {
-  border-bottom: 1px solid #e3e6f0;
+.employee-table {
+  width: 100%;
 }
 
-.modal-footer {
-  border-top: 1px solid #e3e6f0;
+.text-center {
+  text-align: center;
+}
+
+/* Dialog Styles */
+.employee-dialog {
+  min-width: 500px;
+  max-width: 600px;
+  padding: 0;
+}
+
+.employee-dialog mat-dialog-content {
+  padding: 24px;
+}
+
+.employee-dialog h2 {
+  margin: 0 0 24px 0;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.employee-dialog .full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.employee-dialog mat-dialog-actions {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-section {
+    width: 100%;
+  }
+
+  .search-section mat-form-field {
+    width: 100%;
+    flex: 1;
+  }
+
+  .employee-dialog {
+    min-width: 90vw;
+  }
 }

@@ -4,10 +4,20 @@ import { ApiResponse } from './../../models/ApiResponse';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user-service';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-employee-detais',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './employee-detais.html',
   styleUrl: './employee-detais.css',
   standalone: true,

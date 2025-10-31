@@ -1,36 +1,63 @@
 <div class="checkout-container">
-  <div class="payment-form">
-    <h2>Payment Details</h2>
-    <form>
-      <div class="form-group">
-        <label for="card-number">Card Number</label>
-        <input type="text" id="card-number" placeholder="**** **** **** ****" />
-      </div>
-      <div class="form-group">
-        <label for="expiry-date">Expiry Date</label>
-        <input type="text" id="expiry-date" placeholder="MM/YY" />
-      </div>
-      <div class="form-group">
-        <label for="cvv">CVV</label>
-        <input type="text" id="cvv" placeholder="***" />
-      </div>
-      <button type="submit" class="pay-button">Pagar</button>
-    </form>
-  </div>
-  <div class="order-summary">
-    <h3>Summary</h3>
-    <h2>{{ productModel.name }}</h2>
-    <div class="summary-item">
-      <span>Desconto</span>
-      <span>-{{addOff(productModel.price) | currency:'BRL' }}</span>
-    </div>
-    <div class="summary-item">
-      <span>Total</span>
-      <span>{{ this.productModel.price | currency:'BRL' }}</span>
-    </div>
-    <div class="summary-item total-payable">
-      <span>Valor a Pagar</span>
-      <span>{{ (productModel.price - addOff(productModel.price)) | currency:'BRL' }}</span>
-    </div>
+  <div class="checkout-grid">
+    <!-- Payment Form -->
+    <mat-card class="payment-form-card">
+      <mat-card-header>
+        <mat-card-title>Payment Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Card Number</mat-label>
+            <input matInput type="text" id="card-number" placeholder="**** **** **** ****" />
+            <mat-icon matPrefix>credit_card</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Expiry Date</mat-label>
+            <input matInput type="text" id="expiry-date" placeholder="MM/YY" />
+            <mat-icon matPrefix>calendar_today</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>CVV</mat-label>
+            <input matInput type="text" id="cvv" placeholder="***" />
+            <mat-icon matPrefix>lock</mat-icon>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit" class="pay-button">
+            <mat-icon>payment</mat-icon>
+            Pagar
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Order Summary -->
+    <mat-card class="order-summary-card">
+      <mat-card-header>
+        <mat-card-title>Summary</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="product-name">{{ productModel?.name }}</h2>
+        
+        <div class="summary-item">
+          <span>Preço</span>
+          <span>{{ productModel?.price | currency:'BRL' }}</span>
+        </div>
+        
+        <div class="summary-item">
+          <span>Desconto</span>
+          <span class="discount">-{{ addOff(productModel?.price) | currency:'BRL' }}</span>
+        </div>
+        
+        <mat-divider class="summary-divider"></mat-divider>
+        
+        <div class="summary-item total-payable">
+          <span>Valor a Pagar</span>
+          <span class="total-amount">{{ (productModel?.price - addOff(productModel?.price)) | currency:'BRL' }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

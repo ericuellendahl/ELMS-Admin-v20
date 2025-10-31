@@ -1,97 +1,115 @@
-body {
-  background-color: #f4f7f6;
+/* Material Design Employee Details Styles */
+.employee-details-container {
+  padding: 0;
 }
 
-.container {
-  padding: 40px;
+.employee-card,
+.loading-card {
+  max-width: 800px;
+  margin: 0 auto;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.employee-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.employee-card mat-card-title {
   display: flex;
-  justify-content: flex-start; /* Align to the left */
-  align-items: flex-start; /* Align to the top */
-}
-
-.card {
-  width: 100%;
-  max-width: 650px;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden; /* To make sure border-radius is applied to children */
-  background-color: #ffffff;
-}
-
-.card-header {
-  background: linear-gradient(90deg, #3a7bd5, #00d2ff);
-  color: white;
-  padding: 25px;
-  border-bottom: none;
-}
-
-.card-header h2 {
-  margin: 0;
-  font-size: 1.8em;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
-.card-body {
-  padding: 30px;
-  background-color: #eef7ff; /* Light blue background for details */
+.employee-card mat-card-title mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: var(--mat-sys-primary);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
 }
 
 .detail-item {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 15px;
+  display: flex;
   align-items: center;
-  padding: 15px 0;
-  border-bottom: 1px solid #d6eaff;
-  font-size: 1.1em;
-}
-
-.detail-item:last-child {
-  border-bottom: none;
-}
-
-.detail-item strong {
-  color: #3a7bd5;
-  font-weight: 600;
-}
-
-.detail-item span {
-  color: #333;
-}
-
-.card-footer {
-  padding: 20px 30px;
-  text-align: right;
-  background-color: #ffffff;
-  border-top: 1px solid #f0f0f0;
-}
-
-.btn {
-  padding: 12px 25px;
-  border: none;
+  gap: 16px;
+  padding: 16px;
+  background-color: #f5f7fb;
   border-radius: 8px;
-  cursor: pointer;
-  font-size: 1em;
+  transition: background-color 0.2s;
+}
+
+.detail-item:hover {
+  background-color: #e9ecef;
+}
+
+.detail-icon {
+  color: var(--mat-sys-primary);
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.detail-content strong {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.875rem;
   font-weight: 600;
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
+.detail-content span {
+  color: #2d3748;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.btn-secondary:hover {
-  background-color: #5a6268;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  gap: 24px;
 }
 
-.loading {
-  text-align: center;
-  padding: 40px;
-  font-size: 1.5em;
-  color: #555;
+.loading-content p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 1.125rem;
+}
+
+.employee-card mat-card-actions {
+  padding: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.employee-card mat-card-actions button mat-icon {
+  margin-right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-card mat-card-title {
+    font-size: 1.25rem;
+  }
 }

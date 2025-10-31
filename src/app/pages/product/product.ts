@@ -1,12 +1,21 @@
 import { Component } from '@angular/core';
 import { ProductModel } from '../../models/ProductModel';
-
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-product',
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    RouterLink,
+    CurrencyPipe,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './product.html',
   styleUrl: './product.css',
 })

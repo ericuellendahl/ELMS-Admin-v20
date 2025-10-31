@@ -1,42 +1,72 @@
-<div class="container">
+<div class="employee-details-container">
   @if(selectEmployee){
-  <div class="card">
-    <div class="card-header">
-      <h2>Detalhes do Funcionário</h2>
-    </div>
-    <div class="card-body">
-      <div class="detail-item">
-        <strong>ID:</strong>
-        <span>{{ selectEmployee.employeeId }}</span>
-      </div>
-      <div class="detail-item">
-        <strong>Nome:</strong>
-        <span>{{ selectEmployee.employeeName }}</span>
-      </div>
-      <div class="detail-item">
-        <strong>Contato:</strong>
-        <span>{{ selectEmployee.contactNo }}</span>
-      </div>
-      <div class="detail-item">
-        <strong>Email:</strong>
-        <span>{{ selectEmployee.emailId }}</span>
-      </div>
-      <div class="detail-item">
-        <strong>Gênero:</strong>
-        <span>{{ selectEmployee.gender }}</span>
-      </div>
-      <div class="detail-item">
-        <strong>Cargo:</strong>
-        <span>{{ selectEmployee.role }}</span>
-      </div>
-    </div>
-    <div class="card-footer">
-      <button class="btn btn-secondary" (click)="goBack()">Voltar</button>
-    </div>
-  </div>
-  } @if (!selectEmployee) {
-  <div class="loading">
-    <p>Carregando detalhes do funcionário...</p>
-  </div>
+    <mat-card class="employee-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>person</mat-icon>
+          Detalhes do Funcionário
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="details-grid">
+          <div class="detail-item">
+            <mat-icon class="detail-icon">badge</mat-icon>
+            <div class="detail-content">
+              <strong>ID:</strong>
+              <span>{{ selectEmployee.employeeId }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">person</mat-icon>
+            <div class="detail-content">
+              <strong>Nome:</strong>
+              <span>{{ selectEmployee.employeeName }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">phone</mat-icon>
+            <div class="detail-content">
+              <strong>Contato:</strong>
+              <span>{{ selectEmployee.contactNo }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">email</mat-icon>
+            <div class="detail-content">
+              <strong>Email:</strong>
+              <span>{{ selectEmployee.emailId }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">wc</mat-icon>
+            <div class="detail-content">
+              <strong>Gênero:</strong>
+              <span>{{ selectEmployee.gender }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">work</mat-icon>
+            <div class="detail-content">
+              <strong>Cargo:</strong>
+              <span>{{ selectEmployee.role }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Voltar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+  @if (!selectEmployee) {
+    <mat-card class="loading-card">
+      <mat-card-content class="loading-content">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Carregando detalhes do funcionário...</p>
+      </mat-card-content>
+    </mat-card>
   }
 </div>

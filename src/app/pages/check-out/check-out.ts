@@ -1,10 +1,25 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-checkout',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    CurrencyPipe,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule
+  ],
   templateUrl: './check-out.html',
   styleUrl: './check-out.css'
 })
