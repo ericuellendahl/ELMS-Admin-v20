@@ -50,33 +50,6 @@
   text-align: center;
 }
 
-/* Dialog Styles */
-.employee-dialog {
-  min-width: 500px;
-  max-width: 600px;
-  padding: 0;
-}
-
-.employee-dialog mat-dialog-content {
-  padding: 24px;
-}
-
-.employee-dialog h2 {
-  margin: 0 0 24px 0;
-  color: #2d3748;
-  font-weight: 600;
-}
-
-.employee-dialog .full-width {
-  width: 100%;
-  margin-bottom: 16px;
-}
-
-.employee-dialog mat-dialog-actions {
-  padding: 16px 24px;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  margin: 0;
-}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -94,7 +67,4 @@
     flex: 1;
   }
 
-  .employee-dialog {
-    min-width: 90vw;
-  }
 }

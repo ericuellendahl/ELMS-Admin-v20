@@ -1,0 +1,78 @@
+<h2 mat-dialog-title>Create New Employee</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="employeeForm" class="employee-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Employee Name</mat-label>
+      <input matInput formControlName="employeeName" required>
+      <mat-icon matPrefix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Department</mat-label>
+      <mat-select formControlName="deptId" required>
+        <mat-option [value]="null" disabled>Select a department</mat-option>
+        @for (dept of departments; track dept.deptId) {
+          <mat-option [value]="dept.deptId">{{ dept.deptName }}</mat-option>
+        }
+        @if (departments.length === 0) {
+          <mat-option disabled>Loading departments...</mat-option>
+        }
+      </mat-select>
+      <mat-icon matPrefix>business</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contact No</mat-label>
+      <input matInput type="tel" formControlName="contactNo" required>
+      <mat-icon matPrefix>phone</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email ID</mat-label>
+      <input matInput type="email" formControlName="emailId" required>
+      <mat-icon matPrefix>email</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+      <mat-icon matPrefix>lock</mat-icon>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="gender" required>
+        <mat-option [value]="null" disabled>Select gender</mat-option>
+        <mat-option value="Male">Male</mat-option>
+        <mat-option value="Female">Female</mat-option>
+        <mat-option value="Other">Other</mat-option>
+      </mat-select>
+      <mat-icon matPrefix>wc</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role" required>
+        <mat-option [value]="null" disabled>Select role</mat-option>
+        <mat-option value="Admin">Admin</mat-option>
+        <mat-option value="Manager">Manager</mat-option>
+        <mat-option value="Employee">Employee</mat-option>
+        <mat-option value="HR">HR</mat-option>
+      </mat-select>
+      <mat-icon matPrefix>badge</mat-icon>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" type="button">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()" type="button" [disabled]="employeeForm.invalid">
+    <mat-icon>save</mat-icon>
+    Save Employee
+  </button>
+</mat-dialog-actions>
+

@@ -1,10 +1,8 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user/user-service';
 import { EmployeeEntityModel } from '../../models/Employee.model';
-import { CommonModule, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable, Unsubscribable } from 'rxjs';
-import { DepartmentDropDown } from '../../models/DepartmentDropDown';
 import { ApiResponse } from '../../models/ApiResponse';
 import { Router } from '@angular/router';
 import { Loading } from '../../services/loaders/loading';
@@ -16,14 +14,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { EmployeeDialogComponent } from './employee-dialog.component';
 
 @Component({
   selector: 'app-employee',
   imports: [
     CommonModule,
     FormsModule,
-    AsyncPipe,
     MatCardModule,
     MatTableModule,
     MatButtonModule,
@@ -31,8 +29,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatPaginatorModule,
-    MatDialogModule
+    MatPaginatorModule
   ],
   templateUrl: './employee.html',
   styleUrl: './employee.css',
@@ -41,40 +38,20 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 export class Employee implements OnInit, OnDestroy {
   userservice = inject(UserService);
   private loading = inject(Loading);
-  dialog = inject(MatDialog);
+  private dialog = inject(MatDialog);
 
   userEmployees: EmployeeEntityModel[] = [];
   isModalOpen: boolean = false;
   searchTerm: string = '';
-  
+
   displayedColumns: string[] = ['id', 'employeeId', 'name', 'email', 'role', 'actions'];
   dataSource: EmployeeEntityModel[] = [];
-
-  newEmployee: EmployeeEntityModel = {
-    employeeName: '',
-    deptId: 0,
-    deptName: '',
-    contactNo: '',
-    emailId: '',
-    role: '',
-    password: '',
-    gender: '',
-  };
 
   router: Router = inject(Router);
   unsubscribe: any;
 
-  @ViewChild('createEmployeeDialog') createEmployeeDialog!: ElementRef<HTMLDialogElement>;
-
-  departamentsDropdown$!: Observable<DepartmentDropDown[]>;
-
   ngOnInit(): void {
     this.getEmployees();
-    this.loadDepartments();
-  }
-
-  loadDepartments() {
-    this.departamentsDropdown$ = this.userservice.getDepartments();
   }
 
   getEmployees() {
@@ -93,28 +70,30 @@ export class Employee implements OnInit, OnDestroy {
   }
 
   openNewUser() {
-    if (this.createEmployeeDialog?.nativeElement) {
-      this.createEmployeeDialog.nativeElement.showModal();
-    }
+    const dialogRef = this.dialog.open(EmployeeDialogComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.saveEmployee(result);
+      }
+    });
   }
 
-  closeModal() {
-    if (this.createEmployeeDialog?.nativeElement) {
-      this.createEmployeeDialog.nativeElement.close();
-    }
-    this.resetNewEmployee();
-  }
-
-  saveEmployee() {
-    this.userservice.postEmployee(this.newEmployee).subscribe({
+  saveEmployee(employee: EmployeeEntityModel) {
+    this.userservice.postEmployee(employee).subscribe({
       next: (result) => {
-        this.userEmployees.unshift(this.newEmployee);
+        this.userEmployees.unshift(employee);
         this.dataSource = [...this.userEmployees];
         alert('Employee created successfully!');
-        this.closeModal();
+        this.getEmployees(); // Recarrega a lista
       },
       error: (error) => {
         console.error('Error saving employee:', error);
+        alert('Error creating employee. Please try again.');
       },
     });
   }
@@ -148,19 +127,6 @@ export class Employee implements OnInit, OnDestroy {
     this.dataSource = filtered;
   }
 
-  resetNewEmployee() {
-    this.newEmployee = {
-      employeeId: 0,
-      employeeName: '',
-      deptId: 0,
-      deptName: '',
-      contactNo: '',
-      emailId: '',
-      role: '',
-      password: '',
-      gender: '',
-    };
-  }
 
   edit(id?: number) {
     this.router.navigate(['/employee/employeedetais', id]);

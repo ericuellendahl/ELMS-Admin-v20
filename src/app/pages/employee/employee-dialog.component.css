@@ -1,0 +1,36 @@
+.employee-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 500px;
+  max-width: 600px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-dialog-content {
+  padding: 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0;
+}
+
+mat-dialog-actions button mat-icon {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .employee-form {
+    min-width: 90vw;
+    max-width: 95vw;
+  }
+}
+

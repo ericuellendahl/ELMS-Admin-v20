@@ -19,9 +19,9 @@
             <input matInput type="text" [(ngModel)]="searchTerm" (keyup.enter)="search()" placeholder="Search for...">
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
-          <button mat-icon-button color="primary" (click)="search()" title="Search">
+          <!-- <button mat-icon-button color="primary" (click)="search()" title="Search">
             <mat-icon>search</mat-icon>
-          </button>
+          </button> -->
         </div>
       </div>
     </mat-card-header>
@@ -80,53 +80,3 @@
   </mat-card>
 </div>
 
-<!-- Create Employee Dialog -->
-<dialog #createEmployeeDialog class="employee-dialog">
-  <mat-dialog-content>
-    <h2 mat-dialog-title>Create New Employee</h2>
-    <form>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Employee Name</mat-label>
-        <input matInput type="text" [(ngModel)]="newEmployee.employeeName" name="employeeName" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Department</mat-label>
-        <mat-select [(ngModel)]="newEmployee.deptId" name="deptId" required>
-          @for (dept of departamentsDropdown$ | async; track dept.deptId) {
-            <mat-option [value]="dept.deptId">{{ dept.deptName }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Contact No</mat-label>
-        <input matInput type="text" [(ngModel)]="newEmployee.contactNo" name="contactNo" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email ID</mat-label>
-        <input matInput type="email" [(ngModel)]="newEmployee.emailId" name="emailId" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Password</mat-label>
-        <input matInput type="text" [(ngModel)]="newEmployee.password" name="password" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Gender</mat-label>
-        <input matInput type="text" [(ngModel)]="newEmployee.gender" name="gender" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Role</mat-label>
-        <input matInput type="text" [(ngModel)]="newEmployee.role" name="role" required>
-      </mat-form-field>
-    </form>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button (click)="closeModal()">Close</button>
-    <button mat-raised-button color="primary" (click)="saveEmployee()">Save Employee</button>
-  </mat-dialog-actions>
-</dialog>
