@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError, of } from 'rxjs';
+import { catchError, map, Observable, throwError, of, tap, finalize, shareReplay } from 'rxjs';
 import { ApiResponse } from '../../models/ApiResponse';
 import { EmployeeEntityModel } from '../../models/Employee.model';
 import { DepartmentDropDown } from '../../models/DepartmentDropDown';
@@ -10,6 +10,12 @@ import { DepartmentDropDown } from '../../models/DepartmentDropDown';
 })
 export class UserService {
   private readonly http = inject(HttpClient);
+  private static readonly EMPLOYEES_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+  // In-memory cache for employees list
+  private employeesCache?: ApiResponse<EmployeeEntityModel[]>;
+  private employeesCacheAt = 0;
+  private employeesRequest$?: Observable<ApiResponse<EmployeeEntityModel[]>>;
 
   private readonly endpoints = {
     employees: '/GetEmployees',
@@ -22,18 +28,48 @@ export class UserService {
   postEmployee(employee: EmployeeEntityModel): Observable<ApiResponse<any>> {
     return this.http
       .post<ApiResponse<any>>(this.endpoints.employeeCreate, employee)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap(() => this.invalidateEmployeesCache()),
+        catchError(this.handleError)
+      );
   }
   deleteEmployee(employeeId?: number): Observable<ApiResponse<any>> {
     return this.http
       .delete<ApiResponse<any>>(`${this.endpoints.employeeDelete}?id=${employeeId}`)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap(() => this.invalidateEmployeesCache()),
+        catchError(this.handleError)
+      );
   }
 
   getAllEmployee(): Observable<ApiResponse<EmployeeEntityModel[]>> {
-    return this.http
+    // Serve from cache if within TTL
+    const now = Date.now();
+    if (this.employeesCache && now - this.employeesCacheAt < UserService.EMPLOYEES_TTL_MS) {
+      return of(this.employeesCache);
+    }
+
+    // If a request is already in-flight, share it
+    if (this.employeesRequest$) {
+      return this.employeesRequest$;
+    }
+
+    this.employeesRequest$ = this.http
       .get<ApiResponse<EmployeeEntityModel[]>>(this.endpoints.employees)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap((response) => {
+          this.employeesCache = response;
+          this.employeesCacheAt = Date.now();
+        }),
+        shareReplay(1),
+        finalize(() => {
+          // Clear the in-flight reference after completion
+          this.employeesRequest$ = undefined;
+        }),
+        catchError(this.handleError)
+      );
+
+    return this.employeesRequest$;
   }
 
   getDepartments(): Observable<DepartmentDropDown[]> {
@@ -66,5 +102,10 @@ export class UserService {
 
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
+  }
+
+  private invalidateEmployeesCache(): void {
+    this.employeesCache = undefined;
+    this.employeesCacheAt = 0;
   }
 }

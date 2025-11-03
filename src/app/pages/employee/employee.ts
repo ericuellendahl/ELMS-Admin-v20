@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UserService } from '../../services/user/user-service';
 import { EmployeeEntityModel } from '../../models/Employee.model';
 import { CommonModule } from '@angular/common';
@@ -7,13 +7,14 @@ import { ApiResponse } from '../../models/ApiResponse';
 import { Router } from '@angular/router';
 import { Loading } from '../../services/loaders/loading';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeDialogComponent } from './employee-dialog.component';
 
@@ -35,7 +36,7 @@ import { EmployeeDialogComponent } from './employee-dialog.component';
   styleUrl: './employee.css',
   standalone: true,
 })
-export class Employee implements OnInit, OnDestroy {
+export class Employee implements OnInit, OnDestroy, AfterViewInit {
   userservice = inject(UserService);
   private loading = inject(Loading);
   private dialog = inject(MatDialog);
@@ -45,13 +46,28 @@ export class Employee implements OnInit, OnDestroy {
   searchTerm: string = '';
 
   displayedColumns: string[] = ['id', 'employeeId', 'name', 'email', 'role', 'actions'];
-  dataSource: EmployeeEntityModel[] = [];
+  dataSource: MatTableDataSource<EmployeeEntityModel> = new MatTableDataSource<EmployeeEntityModel>([]);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   router: Router = inject(Router);
   unsubscribe: any;
 
   ngOnInit(): void {
+    // Configure custom filter to search by name, email and role
+    this.dataSource.filterPredicate = (data: EmployeeEntityModel, filter: string): boolean => {
+      const normalized = filter.trim().toLowerCase();
+      return (
+        (data.employeeName || '').toLowerCase().includes(normalized) ||
+        (data.emailId || '').toLowerCase().includes(normalized) ||
+        (data.role || '').toLowerCase().includes(normalized)
+      );
+    };
     this.getEmployees();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   getEmployees() {
@@ -59,7 +75,7 @@ export class Employee implements OnInit, OnDestroy {
     this.unsubscribe = this.userservice.getAllEmployee().subscribe({
       next: (result: ApiResponse<EmployeeEntityModel[]>) => {
         this.userEmployees = result.data;
-        this.dataSource = result.data;
+        this.dataSource.data = result.data;
         this.loading.setUpdating(false);
       },
       error: (error) => {
@@ -87,7 +103,7 @@ export class Employee implements OnInit, OnDestroy {
     this.userservice.postEmployee(employee).subscribe({
       next: (result) => {
         this.userEmployees.unshift(employee);
-        this.dataSource = [...this.userEmployees];
+        this.dataSource.data = [...this.userEmployees];
         alert('Employee created successfully!');
         this.getEmployees(); // Recarrega a lista
       },
@@ -103,7 +119,7 @@ export class Employee implements OnInit, OnDestroy {
       this.userservice.deleteEmployee(employeeId).subscribe({
         next: (result) => {
           this.userEmployees = this.userEmployees.filter((employee) => employee.employeeId !== employeeId);
-          this.dataSource = [...this.userEmployees];
+          this.dataSource.data = [...this.userEmployees];
           alert(result.message);
         },
         error: (error) => {
@@ -114,17 +130,11 @@ export class Employee implements OnInit, OnDestroy {
   }
 
   search() {
-    if (!this.searchTerm) {
-      this.getEmployees();
-      return;
+    const value = (this.searchTerm || '').trim().toLowerCase();
+    this.dataSource.filter = value;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-
-    const filtered = this.userEmployees.filter(employee =>
-      employee.employeeName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      employee.emailId.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      employee.role.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-    this.dataSource = filtered;
   }
 
 
