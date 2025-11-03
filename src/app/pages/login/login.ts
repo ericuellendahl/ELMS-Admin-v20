@@ -41,6 +41,7 @@ export class Login {
           this.loading.setUpdating(false);
         } else {
           alert(response.message);
+          this.loading.setUpdating(false);
         }
       },
       error: (error) => {

@@ -1,9 +1,8 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { UserService } from '../../services/user/user-service';
+// import removed: UserService not used after introducing facade
 import { EmployeeEntityModel } from '../../models/Employee.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiResponse } from '../../models/ApiResponse';
 import { Router } from '@angular/router';
 import { Loading } from '../../services/loaders/loading';
 import { MatCardModule } from '@angular/material/card';
@@ -17,6 +16,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeDialogComponent } from './employee-dialog.component';
+import { EmployeeFacade } from '../../facades/employee.facade';
 
 @Component({
   selector: 'app-employee',
@@ -37,7 +37,7 @@ import { EmployeeDialogComponent } from './employee-dialog.component';
   standalone: true,
 })
 export class Employee implements OnInit, OnDestroy, AfterViewInit {
-  userservice = inject(UserService);
+  private employeeFacade = inject(EmployeeFacade);
   private loading = inject(Loading);
   private dialog = inject(MatDialog);
 
@@ -72,10 +72,10 @@ export class Employee implements OnInit, OnDestroy, AfterViewInit {
 
   getEmployees() {
     this.loading.setUpdating(true);
-    this.unsubscribe = this.userservice.getAllEmployee().subscribe({
-      next: (result: ApiResponse<EmployeeEntityModel[]>) => {
-        this.userEmployees = result.data;
-        this.dataSource.data = result.data;
+    this.unsubscribe = this.employeeFacade.loadEmployees().subscribe({
+      next: (employees: EmployeeEntityModel[]) => {
+        this.userEmployees = employees;
+        this.dataSource.data = employees;
         this.loading.setUpdating(false);
       },
       error: (error) => {
@@ -100,7 +100,7 @@ export class Employee implements OnInit, OnDestroy, AfterViewInit {
   }
 
   saveEmployee(employee: EmployeeEntityModel) {
-    this.userservice.postEmployee(employee).subscribe({
+    this.employeeFacade.createEmployee(employee).subscribe({
       next: (result) => {
         this.userEmployees.unshift(employee);
         this.dataSource.data = [...this.userEmployees];
@@ -116,7 +116,7 @@ export class Employee implements OnInit, OnDestroy, AfterViewInit {
 
   remove(employeeId?: number) {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.userservice.deleteEmployee(employeeId).subscribe({
+      this.employeeFacade.deleteEmployee(employeeId).subscribe({
         next: (result) => {
           this.userEmployees = this.userEmployees.filter((employee) => employee.employeeId !== employeeId);
           this.dataSource.data = [...this.userEmployees];
