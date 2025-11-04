@@ -1,12 +1,234 @@
-@if(isLoading){
-<div class="loading-overlay">
-  <mat-progress-spinner
-    mode="indeterminate"
-    diameter="60"
-    strokeWidth="4"
-    color="primary"
-  ></mat-progress-spinner>
-</div>
+<!-- Loading Overlay -->
+@if(isLoading) {
+  <div class="loading-overlay">
+    <mat-progress-spinner
+      mode="indeterminate"
+      diameter="60"
+      strokeWidth="4"
+      color="primary"
+    ></mat-progress-spinner>
+  </div>
 }
 
-<router-outlet></router-outlet>
+<!-- Router Outlet -->
+@if(isLoginPage) {
+  <router-outlet></router-outlet>
+} @else {
+  <!-- Main Layout with Sidebar and Toolbar -->
+  <mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    opened
+    [fixedInViewport]="true"
+    [fixedTopGap]="64"
+    class="sidenav"
+    [class.hidden-on-mobile]="true"
+  >
+    <div class="sidenav-content">
+      <!-- Logo -->
+      <div class="logo-section">
+        <h3 class="logo-title">
+          <mat-icon>security</mat-icon>
+          ELMS
+        </h3>
+        <small class="logo-subtitle">Admin Dashboard</small>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- Navigation Menu -->
+      <mat-nav-list class="nav-menu">
+        <a
+          mat-list-item
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidebarOnMobile()"
+        >
+          <mat-icon matListItemIcon>dashboard</mat-icon>
+          <span matListItemTitle>Dashboard</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/employee"
+          routerLinkActive="active"
+          (click)="closeSidebarOnMobile()"
+        >
+          <mat-icon matListItemIcon>people</mat-icon>
+          <span matListItemTitle>Employees</span>
+          <span matListItemMeta class="badge material-badge">New</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/leave"
+          routerLinkActive="active"
+          (click)="closeSidebarOnMobile()"
+        >
+          <mat-icon matListItemIcon>calendar_today</mat-icon>
+          <span matListItemTitle>Leave Management</span>
+          <span matListItemMeta class="badge material-badge danger">3</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/product"
+          routerLinkActive="active"
+          (click)="closeSidebarOnMobile()"
+        >
+          <mat-icon matListItemIcon>inventory</mat-icon>
+          <span matListItemTitle>Product</span>
+          <span matListItemMeta class="badge material-badge danger">25</span>
+        </a>
+
+        <div class="spacer"></div>
+
+        <!-- Footer -->
+        <div class="sidenav-footer">
+          <div class="version">v2.0.0</div>
+          <div class="footer-icons">
+            <a href="#" mat-icon-button>
+              <mat-icon>code</mat-icon>
+            </a>
+            <a href="#" mat-icon-button>
+              <mat-icon>help_outline</mat-icon>
+            </a>
+            <a href="#" mat-icon-button>
+              <mat-icon>logout</mat-icon>
+            </a>
+          </div>
+        </div>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main Content Area -->
+  <mat-sidenav-content>
+    <!-- Top Toolbar -->
+    <mat-toolbar color="primary" class="toolbar">
+      <button mat-icon-button class="mobile-menu-button" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="spacer"></span>
+
+      <!-- Notifications -->
+      <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" class="toolbar-icon">
+        <mat-icon>notifications</mat-icon>
+        <span class="notification-badge">3</span>
+      </button>
+      <mat-menu #notificationsMenu="matMenu">
+        <div class="notification-header">
+          <h6>Notifications</h6>
+        </div>
+        <button mat-menu-item>
+          <div class="notification-item">
+            <div class="notification-icon primary">
+              <mat-icon>person_add</mat-icon>
+            </div>
+            <div class="notification-content">
+              <div class="notification-time">5 min ago</div>
+              <span>New employee registered</span>
+            </div>
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div class="notification-item">
+            <div class="notification-icon success">
+              <mat-icon>calendar_today</mat-icon>
+            </div>
+            <div class="notification-content">
+              <div class="notification-time">1 hour ago</div>
+              <span>New leave request</span>
+            </div>
+          </div>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <span class="view-all">View all notifications</span>
+        </button>
+      </mat-menu>
+
+      <!-- User Menu -->
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" class="toolbar-icon user-menu-button">
+        <div class="user-info">
+          <span class="user-name">{{ userName }}</span>
+        </div>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <div class="user-menu-header">
+          <img
+            [src]="
+              'https://ui-avatars.com/api/?name=' +
+              userName +
+              '&background=4361ee&color=fff&rounded=true&size=64'
+            "
+            alt="User"
+            class="user-avatar"
+          />
+          <div class="user-details">
+            <small>{{ role }}</small>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>My Profile</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>help_outline</mat-icon>
+          <span>Help Center</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logOff()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- Page Content -->
+    <main class="main-content">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a routerLink="/dashboard">Home</a>
+        <mat-icon>chevron_right</mat-icon>
+        <span>{{ pageTitle }}</span>
+      </nav>
+
+      <!-- Page Title -->
+      <div class="page-header">
+        <h2 class="page-title">
+          <mat-icon>{{ getPageIcon() }}</mat-icon>
+          {{ pageTitle }}
+        </h2>
+      </div>
+
+      <!-- Main Content -->
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <span>© 2025 ELMS Admin. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Help Center</a>
+        </div>
+      </div>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+}
