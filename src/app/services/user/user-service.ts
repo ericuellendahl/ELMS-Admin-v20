@@ -18,7 +18,7 @@ export class UserService {
   private employeesRequest$?: Observable<ApiResponse<EmployeeEntityModel[]>>;
 
   private readonly endpoints = {
-    employees: '/GetEmployees',
+    employees: '/GetAllUsers',
     departments: '/GetDepartments',
     employeeById: '/GetEmployeeById',
     employeeCreate: '/CreateEmployee',

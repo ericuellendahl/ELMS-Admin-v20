@@ -8,7 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 export class LoginService {
 
  private readonly endpoints = {
-    login: '/Login'
+    login: '/login'
   } as const;
 
     private readonly http = inject(HttpClient);

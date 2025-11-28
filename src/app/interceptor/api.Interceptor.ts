@@ -2,7 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   // Base URL centralizada
-  const baseUrl = 'https://freeapi.miniprojectideas.com/api/EmployeeLeave';
+  const baseUrl = 'https://api.freeprojectapi.com/api/CollegeProject';
 
   // Apenas adiciona a base URL se a requisição não for externa
   if (!req.url.startsWith('http')) {
